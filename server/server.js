@@ -41,6 +41,7 @@ app.get('/todos/:id', (req, res) => {
     if (!ObjectID.isValid(id)) {
         return res.status(404).send('Todo not found');
     }
+    //here we query the database:
     //findById
         //success
             //if todo- send back
@@ -52,7 +53,7 @@ app.get('/todos/:id', (req, res) => {
             return res.status(404).send();
         }
         //success
-        res.send({todo});
+        res.send({todo});   //returns response send todo 
     }).catch((e) => {
         res.status(400).send();
     });
