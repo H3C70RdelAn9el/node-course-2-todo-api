@@ -1,6 +1,7 @@
 /* jshint esversion: 6 */
 var express = require('express');
 var bodyParser = require('body-parser');
+var {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
@@ -30,6 +31,34 @@ app.get('/todos', (req, res) => {
         res.status(400).send(e);
     });
 });
+
+// GET /todos /1234324id
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    // validate id using isValid
+        //404 - send back empty send
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send('Todo not found');
+    }
+    //findById
+        //success
+            //if todo- send back
+            // if no todo -- send back 404 w/empty body
+        //error
+            // 400 - send empty body back
+    Todo.findById(id).then((todo) => {
+        if (!todo) {
+            return res.status(404).send();
+        }
+        //success
+        res.send({todo});
+    }).catch((e) => {
+        res.status(400).send();
+    });
+
+});
+
 
 app.listen(3000, () => {
     console.log('Started on port 3000.');
