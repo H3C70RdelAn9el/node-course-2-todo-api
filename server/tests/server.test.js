@@ -5,6 +5,8 @@ const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
+const{User} = require('./../models/user');
+
 
 //making an array of dummy todos
 const todos = [{
@@ -101,6 +103,6 @@ describe('POST /todos', () => {
             .end(done);
     });
 
-
+// personal test
 
 });
